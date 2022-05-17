@@ -41,6 +41,7 @@ class Collection extends BaseCollection
             $node->setRelation('children', BaseCollection::make($children)->sortBy($sortBy)->values());
         }
 
+        $this->items = collect($this->items)->sortBy($sortBy)->values();
 
         return $this;
     }
