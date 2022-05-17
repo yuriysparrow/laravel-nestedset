@@ -1,13 +1,13 @@
 {
-    "name": "kalnoy/nestedset",
+    "name": "nelnezamy/nestedset",
     "description": "Nested Set Model for Laravel 5.7 and up",
     "keywords": ["laravel", "nested sets", "nsm", "database", "hierarchy"],
     "license": "MIT",
 
     "authors": [
         {
-            "name": "Alexander Kalnoy",
-            "email": "lazychaser@gmail.com"
+            "name": "Norhan El-nezamy",
+            "email": "norhanelnezamy@gmail.com"
         }
     ],
 
