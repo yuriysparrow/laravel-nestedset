@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Collection extends BaseCollection
 {
+    public $sortBy = '';
     /**
      * Fill `parent` and `children` relationships for every node in the collection.
      *
@@ -18,14 +19,12 @@ class Collection extends BaseCollection
     {
         if ($this->isEmpty()) return $this;
 
-        $sortBy = '';
-
         $groupedNodes = $this->groupBy($this->first()->getParentIdName());
 
         /** @var NodeTrait|Model $node */
         foreach ($this->items as $node) {
 
-            $sortBy = $node->sortBy ?? '';
+            $this->sortBy = $node->sortBy;
 
             if ( ! $node->getParentId()) {
                 $node->setRelation('parent', null);
@@ -38,10 +37,9 @@ class Collection extends BaseCollection
                 $child->setRelation('parent', $node);
             }
 
-            $node->setRelation('children', BaseCollection::make($children)->sortBy($sortBy)->values());
+            $sortedChildren = BaseCollection::make($children)->sortBy($this->sortBy)->values();
+            $node->setRelation('children', $sortedChildren);
         }
-
-        $this->items = collect($this->items)->sortBy($sortBy)->values();
 
         return $this;
     }
@@ -71,12 +69,15 @@ class Collection extends BaseCollection
 
         /** @var Model|NodeTrait $node */
         foreach ($this->items as $node) {
+
+            $this->sortBy = $node->sortBy;
+
             if ($node->getParentId() == $root) {
                 $items[] = $node;
             }
         }
 
-        return new static($items);
+        return new static(collect($items)->sortBy($this->sortBy)->values());
     }
 
     /**

@@ -623,7 +623,7 @@ Installation
 To install the package, in terminal:
 
 ```
-composer require kalnoy/nestedset
+composer require norhan-elnezamy/laravel-nestedset
 ```
 
 ### Setting up from scratch
